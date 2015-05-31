@@ -30,8 +30,9 @@ int solution(vector<int> &A, vector<int> &B) {
                     if( C.empty() )
                         continue;
                 }
+                // fish at top of the stack is bigger than current fish
                 else {
-                    // current fish is eaten by fish at top of the stack
+                    // fish at top of the stack eat current fish
                     // update current fish to the next one
                     i++;
                 }
