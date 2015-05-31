@@ -20,8 +20,6 @@ int solution(vector<int> &A) {
                 size--;
         }
     }
-    if( size<=0 )
-        return -1;
     
     int count(0);
     int j(-1);
