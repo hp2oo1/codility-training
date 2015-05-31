@@ -42,45 +42,47 @@ Copyright 2009–2015 by Codility Limited. All Rights Reserved. Unauthorized cop
 // you can write to stdout for debugging purposes, e.g.
 // cout << "this is a debug message" << endl;
 
-vector<int> process(vector<int> &A, bool reverse) {
-    vector<int> B(A.size(),0);
-    map<int,int> mymap;
-    for(unsigned int j=0; j<A.size(); ++j) {
-        unsigned int i=j;
-        if( reverse ) {
-            i = A.size()-1-j;
-        }
-        pair<map<int,int>::iterator,bool> ret;
-        ret = mymap.insert( make_pair(A[i],1) );
-        if( ret.second==false ) {
-            ret.first->second++;
-        }
-        int leader(-1000000001);
-        for(map<int,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it) {
-            if( it->second > (j+1)/2 ) {
-                leader = it->first;
-                break;
-            }
-        }
-        B[i] = leader;
-    }
-    // for(unsigned int i=0; i<B.size(); ++i) {
-        // cout << B[i] << endl;
-    // }
-    return B;
-}
+// you can use includes, for example:
+// #include <algorithm>
+
+// you can write to stdout for debugging purposes, e.g.
+// cout << "this is a debug message" << endl;
 
 int solution(vector<int> &A) {
     // write your code in C++11
-    vector<int> B = process(A,false);
-    // cout << endl;
-    vector<int> C = process(A,true);
     
+    int size(0);
+    int value(0);
+    for(unsigned int i=0; i<A.size(); ++i) {
+        if( size==0 ) {
+            size++;
+            value = A[i];
+        }
+        else {
+            if( A[i]==value )
+                size++;    
+            else
+                size--;
+        }
+    }
+    if( size<=0 )
+        return 0;
+        
     int count(0);
-    for( unsigned int i=0; i<A.size()-1; ++i ) {
-        if( B[i]==C[i+1] && B[i]>-1000000001 )
+    for(unsigned int i=0; i<A.size(); ++i) {
+        if( A[i]==value )
             count++;
     }
+    if( count<=A.size()/2 )
+        return 0;
     
-    return count;
+    int number(0);
+    int total(count);
+    for(unsigned int i=0; i<A.size(); ++i) {
+        if( A[i]==value )
+            count--;
+        if( (total-count)>(i+1)/2 && count>(A.size()-(i+1))/2 )
+            number++;
+    }
+    return number;
 }
