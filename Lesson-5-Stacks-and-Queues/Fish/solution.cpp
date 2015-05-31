@@ -14,8 +14,8 @@ int solution(vector<int> &A, vector<int> &B) {
             i++;
         }
         else {
-            if( B[ C[C.size()-1] ]==1 && B[i]==0 ) {
-                if( A[ C[C.size()-1] ]<A[i] ) {
+            if( B[ C.back() ]==1 && B[i]==0 ) {
+                if( A[ C.back() ]<A[i] ) {
                     C.pop_back();
                     if( C.empty() )
                         continue;
