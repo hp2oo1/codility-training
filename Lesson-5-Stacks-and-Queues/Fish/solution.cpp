@@ -24,7 +24,7 @@ int solution(vector<int> &A, vector<int> &B) {
             if( B[ C.back() ]==1 && B[i]==0 ) {
                 // fish at top of the stack is smaller than current fish
                 if( A[ C.back() ]<A[i] ) {
-                    // fish at top of the stack is eaten by current fish
+                    // fish at top of the stack is eaten by current fish, pop out of the stack
                     C.pop_back();
                     // when stack is empty, keep current fish and start over
                     if( C.empty() )
