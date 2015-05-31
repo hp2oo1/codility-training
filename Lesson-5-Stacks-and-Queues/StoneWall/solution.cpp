@@ -8,27 +8,13 @@ int solution(vector<int> &H) {
     // write your code in C++11
     vector<int> stack;
     int count(0);
-    unsigned int i(0);
-    while( i<H.size() ) {
-        if( stack.empty() ) {
+    for(unsigned int i=0; i<H.size(); ++i) {
+        while( !stack.empty() && stack.back()>H[i] ) {
+            stack.pop_back();
+        }
+        if( stack.empty() || stack.back()<H[i] ) {
             stack.push_back( H[i] );
             count++;
-            i++;
-        }
-        else {
-            while( !stack.empty() && stack.back()>H[i] ) {
-                stack.pop_back();
-            }
-            if( stack.empty() )
-                continue;
-            else if( stack.back()==H[i] ) {
-                i++;
-            }
-            else if( stack.back()<H[i] ) {
-                stack.push_back( H[i] );
-                count++;
-                i++;
-            }
         }
     }
     return count;
