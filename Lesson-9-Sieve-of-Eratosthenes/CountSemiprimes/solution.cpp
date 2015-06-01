@@ -58,18 +58,6 @@ vector<int> findSemiPrimes(vector<int> &primes, int first, int last) {
     return semiPrimes;
 }
 
-int countSemiPrimes(vector<int> &semiPrimes, int first, int last) {
-    int count(0);
-    for(unsigned int i=0; i<semiPrimes.size(); ++i) {
-        // cout << semiPrimes[i] << endl;
-        if( semiPrimes[i]>=first && semiPrimes[i]<=last )
-            count++;
-    }
-    return count;
-}
-
-
-
 vector<int> solution(int N, vector<int> &P, vector<int> &Q) {
 
     if( N==1 ) {
@@ -86,7 +74,7 @@ vector<int> solution(int N, vector<int> &P, vector<int> &Q) {
     vector<int> semiPrimes = findSemiPrimes(primes,minP,maxQ);
     sort(semiPrimes.begin(),semiPrimes.end());
 
-    cout << endl;
+    // cout << endl;
 
     // after
     vector<int> A(N,0);
@@ -104,7 +92,7 @@ vector<int> solution(int N, vector<int> &P, vector<int> &Q) {
         A[k] = count;
     }
     
-    cout << endl;
+    // cout << endl;
     
     // before
     vector<int> B(N,0);
@@ -128,7 +116,6 @@ vector<int> solution(int N, vector<int> &P, vector<int> &Q) {
     for(unsigned int i=0; i<P.size(); ++i) {
         // cout << total << " " << A[Q[i]-1] << " " << B[P[i]-1] << endl;
         counts[i] = total - A[Q[i]-1] - B[P[i]-1];
-        // counts[i] = countSemiPrimes(semiPrimes,P[i],Q[i]);
     }
     
     return counts;
