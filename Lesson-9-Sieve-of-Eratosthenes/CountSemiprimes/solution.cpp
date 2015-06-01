@@ -4,6 +4,12 @@
 // you can write to stdout for debugging purposes, e.g.
 // cout << "this is a debug message" << endl;
 
+// Correctness 100%
+// Performance 20%
+// Task score 55%
+// Detected time complexity:
+// O(M * N ** (3/2)) or O(N * log(log(N)) + M * N) or O(M * N**3)
+
 int findMin(vector<int> &P) {
     int minP(P[0]);
     for(unsigned int i=0; i<P.size(); ++i) {
