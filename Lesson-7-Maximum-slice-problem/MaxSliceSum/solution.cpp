@@ -4,8 +4,8 @@
 // you can write to stdout for debugging purposes, e.g.
 // cout << "this is a debug message" << endl;
 
-void process(vector<int> &A, int first, int last, int &max, int &max_i, bool reverse) {
-    int sum(0);
+void process(vector<int> &A, int first, int last, long &max, int &max_i, bool reverse) {
+    long sum(0);
     for(unsigned int j=first; j<=last; ++j) {
         int i = j;
         if( reverse )
@@ -21,18 +21,18 @@ void process(vector<int> &A, int first, int last, int &max, int &max_i, bool rev
 int solution(vector<int> &A) {
     // write your code in C++11
     // 0-->q in [0,N-1]
-    int max_1(A[0]);
+    long max_1(A[0]);
     int max_q(0);
     process( A, 0, A.size()-1, max_1, max_q, false );
     // cout << max_q << " " << max_1 << endl;
 
     // p<--N-1 in [0,N-1]
-    int max_2(A.back());
+    long max_2(A.back());
     int max_p(A.size()-1);
     process( A, 0, A.size()-1, max_2, max_p, true );
     // cout << max_p << " " << max_2 << endl;
 
-    int max;
+    long max;
     if( max_1 > max_2 ) {
         // p<--q in [0,max_q]
         max = A[max_q];
