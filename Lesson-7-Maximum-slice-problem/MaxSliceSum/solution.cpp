@@ -1,32 +1,52 @@
-/*
-A non-empty zero-indexed array A consisting of N integers is given. A pair of integers (P, Q), such that 0 ≤ P ≤ Q < N, is called a slice of array A. The sum of a slice (P, Q) is the total of A[P] + A[P+1] + ... + A[Q].
+// you can use includes, for example:
+// #include <algorithm>
 
-Write a function:
+// you can write to stdout for debugging purposes, e.g.
+// cout << "this is a debug message" << endl;
 
-int solution(int A[], int N);
+void process(vector<int> &A, int first, int last, int &max, int &max_i, bool reverse) {
+    int sum(0);
+    for(unsigned int j=first; j<=last; ++j) {
+        int i = j;
+        if( reverse )
+            i = last-first-j;
+        sum += A[i];
+        if( sum>max ) {
+            max = sum;
+            max_i = i;
+        }
+    }
+}
 
-that, given an array A consisting of N integers, returns the maximum sum of any slice of A.
+int solution(vector<int> &A) {
+    // write your code in C++11
+    // 0-->q in [0,N-1]
+    int max_1(A[0]);
+    int max_q(0);
+    process( A, 0, A.size()-1, max_1, max_q, false );
+    // cout << max_q << " " << max_1 << endl;
 
-For example, given array A such that:
+    // p<--N-1 in [0,N-1]
+    int max_2(A.back());
+    int max_p(A.size()-1);
+    process( A, 0, A.size()-1, max_2, max_p, true );
+    // cout << max_p << " " << max_2 << endl;
 
-A[0] = 3  A[1] = 2  A[2] = -6
-A[3] = 4  A[4] = 0
-the function should return 5 because:
+    int max;
+    if( max_1 > max_2 ) {
+        // p<--q in [0,max_q]
+        max = A[max_q];
+        int max_p(max_q);
+        process( A, 0, max_q, max, max_p, true );
+        // cout << max_p << " " << max << endl;
+    }
+    else {
+        // p-->q in [max_p,N-1]
+        max = A[max_p];
+        int max_q(max_p);
+        process( A, max_p, A.size()-1, max, max_q, false );
+        // cout << max_q << " " << max << endl;
+    }
 
-(3, 4) is a slice of A that has sum 4,
-(2, 2) is a slice of A that has sum −6,
-(0, 1) is a slice of A that has sum 5,
-no other slice of A has sum greater than (0, 1).
-Assume that:
-
-N is an integer within the range [1..1,000,000];
-each element of array A is an integer within the range [−1,000,000..1,000,000];
-the result will be an integer within the range [−2,147,483,648..2,147,483,647].
-Complexity:
-
-expected worst-case time complexity is O(N);
-expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
-Elements of input arrays can be modified.
-
-Copyright 2009–2015 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
-*/
+    return max;
+}
