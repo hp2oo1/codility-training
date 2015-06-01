@@ -7,7 +7,7 @@
 int solution(vector<int> &A) {
     // write your code in C++11
     int price_min(200001);
-    int profit_max(-1);
+    int profit_max(0);
     for(unsigned int i=0; i<A.size(); ++i) {
         if( A[i]<price_min )
             price_min = A[i];
