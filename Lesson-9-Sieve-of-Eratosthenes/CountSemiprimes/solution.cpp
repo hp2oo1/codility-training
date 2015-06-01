@@ -4,12 +4,6 @@
 // you can write to stdout for debugging purposes, e.g.
 // cout << "this is a debug message" << endl;
 
-// Correctness 100%
-// Performance 20%
-// Task score 55%
-// Detected time complexity:
-// O(M * N ** (3/2)) or O(N * log(log(N)) + M * N) or O(M * N**3)
-
 int findMin(vector<int> &P) {
     int minP(P[0]);
     for(unsigned int i=0; i<P.size(); ++i) {
@@ -74,7 +68,14 @@ int countSemiPrimes(vector<int> &semiPrimes, int first, int last) {
     return count;
 }
 
+
+
 vector<int> solution(int N, vector<int> &P, vector<int> &Q) {
+
+    if( N==1 ) {
+        return vector<int>(1,0);
+    }
+
     // write your code in C++11
     int minP = findMin(P);
     int maxQ = findMax(Q);
@@ -83,10 +84,51 @@ vector<int> solution(int N, vector<int> &P, vector<int> &Q) {
     vector<int> primes = findPrimes(2,maxQ);
     // cout << endl;
     vector<int> semiPrimes = findSemiPrimes(primes,minP,maxQ);
+    sort(semiPrimes.begin(),semiPrimes.end());
+
+    cout << endl;
+
+    // after
+    vector<int> A(N,0);
+    int count(0);
+    int j(semiPrimes.size()-1);
+    for(unsigned int i=0; i<N; ++i) {
+        int k = N-1-i;
+        if( k+1 < semiPrimes[j] ) {
+            count++;
+            j--;
+            if( j==0 )
+                j= 0;
+        }
+        // cout << k+1 << " " << count << endl;
+        A[k] = count;
+    }
+    
+    cout << endl;
+    
+    // before
+    vector<int> B(N,0);
+    count=0;
+    j=0;
+    for(unsigned int i=0; i<N; ++i) {
+        int k=i;
+        if( k+1 > semiPrimes[j] ) {
+            count++;
+            j++;
+            if( j==0 )
+                j= 0;
+        }
+        // cout << k+1 << " " << count << endl;
+        B[k] = count;
+    }
+    
+    int total = semiPrimes.size();
     
     vector<int> counts(P.size(),0);
     for(unsigned int i=0; i<P.size(); ++i) {
-        counts[i] = countSemiPrimes(semiPrimes,P[i],Q[i]);
+        // cout << total << " " << A[Q[i]-1] << " " << B[P[i]-1] << endl;
+        counts[i] = total - A[Q[i]-1] - B[P[i]-1];
+        // counts[i] = countSemiPrimes(semiPrimes,P[i],Q[i]);
     }
     
     return counts;
