@@ -27,15 +27,16 @@ int solution(int K, int M, vector<int> &A) {
     }
     
     int result(-1);
-    // when lower bound and upper bound meets, it will be the answer
     while( lower_bound<=upper_bound ) {
         // guess minimal large sum as average of lower bound and upper bound
         int mid = (lower_bound + upper_bound) / 2;
-        cout << lower_bound << " " << mid << " " << upper_bound;
-        int k = process(mid,A);
+        // cout << lower_bound << " " << mid << " " << upper_bound;
+        int k = process(mid,A); // test if the mid works
+        // if it needs more blocks than K can offer, it does not work
         if( k<=K ) {
             // the guess can be smaller lowering the upper bound
             upper_bound = mid-1;
+            // record only when it works
             result = mid;
         }
         else {
