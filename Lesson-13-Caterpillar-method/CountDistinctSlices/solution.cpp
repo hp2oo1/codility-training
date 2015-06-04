@@ -1,3 +1,7 @@
+// Correctness 100%
+// Performance 40%
+// Task score 70%
+
 // you can use includes, for example:
 // #include <algorithm>
 #include <bitset>
