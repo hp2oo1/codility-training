@@ -1,6 +1,6 @@
 // Correctness 100%
-// Performance 40%
-// Task score 70%
+// Performance 80%
+// Task score 90%
 
 // you can use includes, for example:
 // #include <algorithm>
@@ -14,26 +14,33 @@ int solution(int M, vector<int> &A) {
         // cout << A[i] << " ";
     // cout << endl;
     // write your code in C++11
-    int i(0);
-    int j(0);
+    long i(0);
+    long j(0);
+    long k(0);
     long count(0);
-    bitset<100000> mybitset;
+    bitset<100001> mybitset;
+    vector<long> myvector(100001,0);
     while( i<A.size() ) {
         // cout << i << " " << j << " ";
         if( j<A.size() ) {
             if( mybitset[A[j]]==0 ) {
                 mybitset[A[j]]= 1;
-                count++;
+                myvector[A[j]]= j;
                 j++;
             }
             else {
-                mybitset.reset();
-                i++;
+                k=myvector[A[j]];
+                // cout << i << " " << k << " " << j << endl;
+                count += (j-i+2)*(j-i+1)/2;
+                count -= k-i+1;
+                count -= (j-k+1)*(j-k)/2;
+                i=k+1;
                 j=i;
+                mybitset.reset();
             }
         }
         else {
-            count += (j-i)*(j-i-1)/2;
+            count += (j-i+1)*(j-i)/2;
             i=j;
         }
         if( count>1000000000 )
