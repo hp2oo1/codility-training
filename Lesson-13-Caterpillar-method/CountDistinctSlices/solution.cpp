@@ -2,6 +2,11 @@
 // Performance 80%
 // Task score 90%
 
+// Note: codility may have a bug here
+// because random access for vector should be O(1)
+// i.e. performance will be not affected by N
+// but in the codility test, the performance drops linear like O(N)
+
 // you can use includes, for example:
 // #include <algorithm>
 #include <bitset>
