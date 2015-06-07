@@ -1,11 +1,13 @@
 // Correctness 100%
-// Performance 80%
-// Task score 90%
+// Performance 100%
+// Task score 100%
 
 // Note: codility may have a bug here
 // because random access for vector should be O(1)
 // i.e. performance will be not affected by N
 // but in the codility test, the performance drops linear like O(N)
+// I was wrong about this.. it is nothing to do with vector or codility test
+// my previous algorithm is O(M^2) rather than O(N) as I desired.
 
 // you can use includes, for example:
 // #include <algorithm>
@@ -18,42 +20,42 @@ int solution(int M, vector<int> &A) {
     // write your code in C++11
     long i(0); // back index
     long j(0); // front index
-    long k(0); // new back index
+    long k(0); 
     long count(0); // count of distinct slices
     bitset<100001> mybitset; // default all bits as 0 (unvisited)
-    vector<long> myvector(100001,-1);
     while( i<A.size() ) {
         if( j<A.size() ) {
             // if A[j] not visited before
             if( mybitset[A[j]]==0 ) {
                 // mark it as visited
                 mybitset[A[j]]= 1;
-                // record its index
-                myvector[A[j]]= j;
                 // move front index to next one
                 j++;
             }
+            // found duplicated A[j]
             else {
-                // k is the index of previous A[j] appears
-                k=myvector[A[j]];
-                // the total number of slices between i and j
-                count += (j-i+2)*(j-i+1)/2;
-                // minus the number of slices which are not distinct
-                count -= k-i+1;
-                // minus the number of slices which will be repeated once i updates to k+1
-                count -= (j-k+1)*(j-k)/2;
-                // update i to k+1
-                i=k+1;
-                // reset j to i
-                j=i;
-                // reset all bits as 0 (unvisited)
-                mybitset.reset();
+                // store back index
+                k=i;
+                // move back index until matching
+                while( A[i]!=A[j] ) {
+                    // clear it as unvisited
+                    mybitset[A[i]]= 0;
+                    // move back index to next one
+                    i++;
+                }
+                mybitset[A[i]]= 0;
+                i++; // now i becomes new back index
+                // number of distinct slices for index range [k,j-1]
+                count += (j-k+1)*(j-k)/2;
+                // minus number of distinct slices for index range [i,j-1] (overlap of next iteration
+                count -= (j-i+1)*(j-i)/2;
             }
         }
+        // j reaches the end
         else {
-            // when j reaches the end, count last distinct slices
+            // count last distinct slices
             count += (j-i+1)*(j-i)/2;
-            // update i reaches the end
+            // update i reaches the end and end loop
             i=j;
         }
         if( count>1000000000 )
