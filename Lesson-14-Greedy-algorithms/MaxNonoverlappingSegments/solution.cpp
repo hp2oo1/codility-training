@@ -6,14 +6,17 @@
 
 int solution(vector<int> &A, vector<int> &B) {
     // write your code in C++11
-    vector<int> C;
+    int count(0);
+    int BB;
     for( unsigned int i=0; i<A.size(); ++i ) {
         if( i==0 ) {
-            C.push_back(B[i]);
+            count++;
+            BB = B[i];
         }
-        else if( A[i]>C.back() ) {
-            C.push_back(B[i]);
+        else if( A[i]>BB ) {
+            count++;
+            BB = B[i];
         }
     }
-    return C.size();
+    return count;
 }
